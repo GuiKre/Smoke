@@ -35,3 +35,13 @@ C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\obj\Debug\net9.0\refint\Smoke.dll
 C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\obj\Debug\net9.0\Smoke.pdb
 C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\obj\Debug\net9.0\Smoke.genruntimeconfig.cache
 C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\obj\Debug\net9.0\ref\Smoke.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Humanizer.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\MySqlConnector.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Guilherme\TI\Projetos\Smoke\Smoke\bin\Debug\net9.0\System.CodeDom.dll
