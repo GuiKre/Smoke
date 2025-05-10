@@ -36,5 +36,59 @@ namespace Smoke.Controllers
 
             return Ok(games);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Game>> GetGameById(int id)
+        {
+            var game = await _appDbContext.SmokeDB.FindAsync(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(game);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateGame(int id, Game updatedGame)
+        {
+            if (id != updatedGame.Id)
+            {
+                return BadRequest("ID da URL não corresponde ao objeto enviado.");
+            }
+
+            var existingGame = await _appDbContext.SmokeDB.FindAsync(id);
+
+            if (existingGame == null)
+            {
+                return NotFound();
+            }
+
+            existingGame.Nome = updatedGame.Nome;
+            existingGame.Genero = updatedGame.Genero;
+            existingGame.Desenvolvedor = updatedGame.Desenvolvedor;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGame(int id)
+        {
+            var game = await _appDbContext.SmokeDB.FindAsync(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            _appDbContext.SmokeDB.Remove(game);
+            await _appDbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }

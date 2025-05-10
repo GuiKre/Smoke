@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Guilherme\\TI\\Projetos\\Smoke\\Smoke\\Smoke.csproj": {}
+    "C:\\_ws\\Smoke\\Smoke\\Smoke.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Guilherme\\TI\\Projetos\\Smoke\\Smoke\\Smoke.csproj": {
+    "C:\\_ws\\Smoke\\Smoke\\Smoke.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guilherme\\TI\\Projetos\\Smoke\\Smoke\\Smoke.csproj",
+        "projectUniqueName": "C:\\_ws\\Smoke\\Smoke\\Smoke.csproj",
         "projectName": "Smoke",
-        "projectPath": "C:\\Users\\Guilherme\\TI\\Projetos\\Smoke\\Smoke\\Smoke.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guilherme\\TI\\Projetos\\Smoke\\Smoke\\obj\\",
+        "projectPath": "C:\\_ws\\Smoke\\Smoke\\Smoke.csproj",
+        "packagesPath": "C:\\Users\\tobias.albieri\\.nuget\\packages\\",
+        "outputPath": "C:\\_ws\\Smoke\\Smoke\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\tobias.albieri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
