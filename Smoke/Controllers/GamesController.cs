@@ -50,28 +50,22 @@ namespace Smoke.Controllers
             return Ok(game);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateGame(int id, Game updatedGame)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateGame(int id, [FromBody] Game updatedGame)
         {
-            if (id != updatedGame.Id)
-            {
-                return BadRequest("ID da URL não corresponde ao objeto enviado.");
-            }
-
+            
             var existingGame = await _appDbContext.SmokeDB.FindAsync(id);
 
             if (existingGame == null)
             {
-                return NotFound();
+                return NotFound("Jogo não encontrado!");
             }
 
-            existingGame.Nome = updatedGame.Nome;
-            existingGame.Genero = updatedGame.Genero;
-            existingGame.Desenvolvedor = updatedGame.Desenvolvedor;
+            _appDbContext.Entry(existingGame).CurrentValues.SetValues(updatedGame);
 
             await _appDbContext.SaveChangesAsync();
 
-            return NoContent();
+            return StatusCode(201, updatedGame);
         }
 
         [HttpDelete("{id}")]
