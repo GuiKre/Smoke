@@ -16,10 +16,10 @@ export default function DeleteGame() {
 
       if (!resposta.ok) throw new Error('Erro ao deletar jogo');
 
-      setMensagem('Jogo deletado com sucesso!');
+      setMensagem('🎉 Jogo deletado com sucesso!');
       setId('');
     } catch (err: any) {
-      setMensagem(err.message);
+      setMensagem(`⚠️ ${err.message}`);
     }
   };
 

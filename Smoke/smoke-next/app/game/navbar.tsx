@@ -23,6 +23,7 @@ export default function Navbar() {
       </div>
       <div style={{ display: 'flex', gap: '1.5rem' }}>
         <NavLink href="/" text="HOME" />
+        <NavLink href="/game/getid" text="Pesquisar" />
         <NavLink href="/game/get" text="Listar" />
         <NavLink href="/game/post" text="Cadastrar" />
         <NavLink href="/game/put" text="Editar" />

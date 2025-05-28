@@ -22,7 +22,7 @@ export default function TodosGames() {
         const dados = await resposta.json();
         setGames(dados);
       } catch (err: any) {
-        setErro(err.message);
+        setErro(`⚠️ ${err.message}`);
       }
     };
 
@@ -34,6 +34,7 @@ export default function TodosGames() {
       style={{
         minHeight: '100vh',
         background: '#1f2937',
+        color: '#f3f4f6',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -48,7 +49,7 @@ export default function TodosGames() {
           borderRadius: '1rem',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           width: '100%',
-          maxWidth: '400px',
+          maxWidth: '800px',
         }}
       >
         <h1
@@ -62,38 +63,57 @@ export default function TodosGames() {
           Lista de Jogos
         </h1>
 
-        {erro && (
+        {erro ? (
           <p
             style={{
               color: '#ef4444',
               fontWeight: 'bold',
-              marginBottom: '1rem',
               textAlign: 'center',
             }}
           >
             {erro}
           </p>
-        )}
-
-        <ul
-          style={{
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
+        ) : (
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            backgroundColor: '#f9fafb',
             color: '#111827',
-            fontSize: '1rem',
-          }}
-        >
-          {games.map((g) => (
-            <li key={g.id} style={{ backgroundColor: '#f9fafb', padding: '0.5rem', borderRadius: '0.5rem' }}>
-              <strong>#{g.id}</strong> - {g.nome} ({g.genero}) <em>{g.desenvolvedor}</em>
-            </li>
-          ))}
-        </ul>
+            borderRadius: '0.5rem',
+            overflow: 'hidden',
+          }}>
+            <thead style={{ backgroundColor: '#e5e7eb' }}>
+              <tr>
+                <th style={thEstilo}>ID</th>
+                <th style={thEstilo}>Nome</th>
+                <th style={thEstilo}>Gênero</th>
+                <th style={thEstilo}>Desenvolvedor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {games.map((g) => (
+                <tr key={g.id} style={{ textAlign: 'center' }}>
+                  <td style={tdEstilo}>{g.id}</td>
+                  <td style={tdEstilo}>{g.nome}</td>
+                  <td style={tdEstilo}>{g.genero}</td>
+                  <td style={tdEstilo}>{g.desenvolvedor}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 }
+
+const thEstilo: React.CSSProperties = {
+  padding: '0.75rem',
+  fontWeight: 'bold',
+  borderBottom: '2px solid #d1d5db',
+};
+
+const tdEstilo: React.CSSProperties = {
+  padding: '0.75rem',
+  borderBottom: '1px solid #d1d5db',
+};
