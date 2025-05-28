@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 type Game = {
   id: number;
   nome: string;
-  tipo: string;
+  genero: string;
+  desenvolvedor: string;
 };
 
 export default function TodosGames() {
@@ -15,7 +16,7 @@ export default function TodosGames() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const resposta = await fetch('http://localhost:5124/api/game');
+        const resposta = await fetch('http://localhost:5016/api/games');
         if (!resposta.ok) throw new Error('Erro ao buscar jogos');
 
         const dados = await resposta.json();
@@ -33,9 +34,9 @@ export default function TodosGames() {
       <h1>Lista de jogos</h1>
       {erro && <p style={{ color: 'red' }}>{erro}</p>}
       <ul>
-        {games.map(p => (
-          <li key={p.id}>
-            #{p.id} - {p.nome} ({p.tipo})
+        {games.map(g => (
+          <li key={g.id}>
+            #{g.id} - {g.nome} ({g.genero}) {g.desenvolvedor}
           </li>
         ))}
       </ul>

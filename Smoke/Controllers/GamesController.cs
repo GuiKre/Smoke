@@ -75,13 +75,14 @@ namespace Smoke.Controllers
 
             if (game == null)
             {
-                return NotFound();
+                return NotFound("Jogo não encontrado");
             }
 
             _appDbContext.SmokeDB.Remove(game);
+
             await _appDbContext.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Jogo deletado!");
         }
 
     }
