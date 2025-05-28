@@ -30,16 +30,70 @@ export default function TodosGames() {
   }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
-      <h1>Lista de jogos</h1>
-      {erro && <p style={{ color: 'red' }}>{erro}</p>}
-      <ul>
-        {games.map(g => (
-          <li key={g.id}>
-            #{g.id} - {g.nome} ({g.genero}) {g.desenvolvedor}
-          </li>
-        ))}
-      </ul>
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#1f2937',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '2rem',
+        fontFamily: 'Arial, sans-serif',
+      }}
+    >
+      <div
+        style={{
+          background: '#C0C0C0',
+          padding: '2rem',
+          borderRadius: '1rem',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+          width: '100%',
+          maxWidth: '400px',
+        }}
+      >
+        <h1
+          style={{
+            marginBottom: '1.5rem',
+            fontSize: '1.5rem',
+            color: '#111827',
+            textAlign: 'center',
+          }}
+        >
+          Lista de Jogos
+        </h1>
+
+        {erro && (
+          <p
+            style={{
+              color: '#ef4444',
+              fontWeight: 'bold',
+              marginBottom: '1rem',
+              textAlign: 'center',
+            }}
+          >
+            {erro}
+          </p>
+        )}
+
+        <ul
+          style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            color: '#111827',
+            fontSize: '1rem',
+          }}
+        >
+          {games.map((g) => (
+            <li key={g.id} style={{ backgroundColor: '#f9fafb', padding: '0.5rem', borderRadius: '0.5rem' }}>
+              <strong>#{g.id}</strong> - {g.nome} ({g.genero}) <em>{g.desenvolvedor}</em>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
