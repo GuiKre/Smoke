@@ -32,7 +32,7 @@ export default function Home() {
         lineHeight: '1.75',
         color: '#d1d5db',
       }}>
-        Bem-vindo ao Smoke! Um sistema completo para gerenciar sua coleção de jogos de videogame. 
+        Bem-vindo ao Smoke! Um sistema para gerenciar sua coleção de jogos de videogame. 
         Aqui você pode cadastrar novos jogos, visualizar sua lista, editar informações e remover jogos facilmente.
       </p>
     </div>

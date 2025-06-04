@@ -1,15 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, } from 'react';
 
 export default function NovoGame() {
   const [nome, setNome] = useState('');
   const [genero, setGenero] = useState('');
   const [desenvolvedor, setDesenvolvedor] = useState('');
-  const [mensagem, setMensagem] = useState('');
+
+  const [fieldErrors, setFieldErrors] = useState<{ nome?: string; genero?: string; desenvolvedor?: string }>({});
+  const [submitStatusMessage, setSubmitStatusMessage] = useState('');
 
   const cadastrar = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFieldErrors({});
+    setSubmitStatusMessage('');
 
     try {
       const resposta = await fetch('http://localhost:5016/api/games', {
@@ -20,16 +24,63 @@ export default function NovoGame() {
         body: JSON.stringify({ nome, genero, desenvolvedor })
       });
 
-      if (!resposta.ok) throw new Error('Erro ao cadastrar');
+      if (!resposta.ok) {
+        const errorData = await resposta.json();
+        if (resposta.status === 400 && errorData.errors) {
+          const newFieldErrors: { nome?: string; genero?: string; desenvolvedor?: string } = {};
+          for (const backendFieldName in errorData.errors) {
+            const frontendFieldName = backendFieldName.toLowerCase() as keyof typeof newFieldErrors;
+            if (errorData.errors[backendFieldName] && errorData.errors[backendFieldName].length > 0) {
+              newFieldErrors[frontendFieldName] = errorData.errors[backendFieldName].join(' ');
+            }
+          }
+          setFieldErrors(newFieldErrors);
+          setSubmitStatusMessage('⚠️ Erro ao cadastrar oo jogo!');
+        } else if (errorData.title) {
+          setSubmitStatusMessage(`⚠️ ${errorData.title}`);
+          setFieldErrors({});
+        } else if (errorData.message) {
+           setSubmitStatusMessage(`⚠️ ${errorData.message}`);
+           setFieldErrors({});
+        } else {
+          setSubmitStatusMessage(`⚠️ Erro ${resposta.status} ao processar a solicitação.`);
+          setFieldErrors({});
+        }
+        return;
+      }
 
-      setMensagem('🎉 Jogo cadastrado com sucesso!');
+      setSubmitStatusMessage('🎉 Jogo cadastrado com sucesso!');
+      setFieldErrors({});
       setNome('');
       setGenero('');
       setDesenvolvedor('');
+
     } catch (err: any) {
-      setMensagem(`⚠️ ${err.message}`);
+      console.error("Erro na requisição:", err);
+      if (!submitStatusMessage.startsWith('⚠️')) {
+         setSubmitStatusMessage(`⚠️ Falha na comunicação com o servidor: ${err.message}`);
+      }
+      setFieldErrors({});
     }
   };
+
+  const inputStyle: React.CSSProperties = {
+    padding: '0.75rem',
+    borderRadius: '0.5rem',
+    border: '1px solid #d1d5db',
+    fontSize: '1rem',
+    outlineColor: '#3b82f6',
+    width: '100%',
+    boxSizing: 'border-box'
+  };
+
+  const errorTextStyle: React.CSSProperties = {
+    color: '#ef4444',
+    fontSize: '0.8rem',
+    marginTop: '0.2rem',
+    minHeight: '1rem',
+  };
+
 
   return (
     <div style={{
@@ -57,32 +108,52 @@ export default function NovoGame() {
         }}>
           Cadastrar Novo Jogo
         </h1>
-      <form onSubmit={cadastrar} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          style={inputEstilo}
-        />
-        <input
-          type="text"
-          placeholder="Genero"
-          value={genero}
-          onChange={(e) => setGenero(e.target.value)}
-          style={inputEstilo}
-        />
-        <input
-          type="text"
-          placeholder="Desenvolvedor"
-          value={desenvolvedor}
-          onChange={(e) => setDesenvolvedor(e.target.value)}
-          style={inputEstilo}
-        />
+      <form onSubmit={cadastrar} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+        <div>
+          <input
+            type="text"
+            placeholder="Nome"
+            value={nome}
+            onChange={(e) => {
+              setNome(e.target.value);
+              if (fieldErrors.nome) setFieldErrors(prev => ({ ...prev, nome: undefined }));
+            }}
+            style={{ ...inputStyle, borderColor: fieldErrors.nome ? '#ef4444' : '#d1d5db' }}
+          />
+          <p style={errorTextStyle}>{fieldErrors.nome || ''}</p>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Gênero"
+            value={genero}
+            onChange={(e) => {
+              setGenero(e.target.value);
+              if (fieldErrors.genero) setFieldErrors(prev => ({ ...prev, genero: undefined }));
+            }}
+            style={{ ...inputStyle, borderColor: fieldErrors.genero ? '#ef4444' : '#d1d5db' }}
+          />
+          <p style={errorTextStyle}>{fieldErrors.genero || ''}</p>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Desenvolvedor"
+            value={desenvolvedor}
+            onChange={(e) => {
+              setDesenvolvedor(e.target.value);
+              if (fieldErrors.desenvolvedor) setFieldErrors(prev => ({ ...prev, desenvolvedor: undefined }));
+            }}
+            style={{ ...inputStyle, borderColor: fieldErrors.desenvolvedor ? '#ef4444' : '#d1d5db' }}
+          />
+          <p style={errorTextStyle}>{fieldErrors.desenvolvedor || ''}</p>
+        </div>
+
         <button
             type="submit"
             style={{
               padding: '0.75rem',
+              marginTop: '0.5rem',
               backgroundColor: '#3b82f6',
               color: 'white',
               border: 'none',
@@ -97,26 +168,17 @@ export default function NovoGame() {
             Cadastrar
         </button>
       </form>
-      {mensagem && (
+      {submitStatusMessage && (
           <p style={{
             marginTop: '1rem',
-            color: mensagem.includes('sucesso') ? '#10b981' : '#ef4444',
+            color: submitStatusMessage.includes('sucesso') ? '#10b981' : '#ef4444',
             fontWeight: 'bold',
             textAlign: 'center',
           }}>
-            {mensagem}
+            {submitStatusMessage}
           </p>
         )}
       </div>
     </div>
   );
 }
-
-// Estilo comum para os inputs
-const inputEstilo: React.CSSProperties = {
-  padding: '0.75rem',
-  borderRadius: '0.5rem',
-  border: '1px solid #d1d5db',
-  fontSize: '1rem',
-  outlineColor: '#3b82f6',
-};

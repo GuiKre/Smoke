@@ -14,7 +14,7 @@ export default function DeleteGame() {
         method: 'DELETE'
       });
 
-      if (!resposta.ok) throw new Error('Erro ao deletar jogo');
+      if (!resposta.ok) throw new Error('ID não encontrado');
 
       setMensagem('🎉 Jogo deletado com sucesso!');
       setId('');
